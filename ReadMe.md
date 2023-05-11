@@ -10,7 +10,7 @@
 
 <br>
 
-Our goal is to make all features possible on this device without any limitations! 
+Most stable custom firmware focused on new features and improvements of original firmware components, with almost no UI changes
 
 <br>
 
@@ -54,6 +54,8 @@ Our Discord Community:
 - Lock device with pin(or regular lock if pin not set) by holding UP button on main screen [(by an4tur0r)](https://github.com/DarkFlippers/unleashed-firmware/pull/107)
 * Sub-GHz -> Short press OK in frequency analyzer to save detected frequency for usage in Read modes
 * Sub-GHz -> Long press OK button in Sub-GHz Frequency analyzer to switch to Read menu and automatically use selected frequency
+* SubGHz -> New option to use timestamps + protocol name when you saving file, instead of random name - Enable in `Radio Settings -> Time in names = ON`
+* SubGHz -> Read mode UI improvements (scrolling text, + shows time when signal was received) (by @wosk)
 * Sub-GHz -> External CC1101 module support (Hardware SPI used)
 * SubGHz -> **Hold right in received signal list to delete selected signal**
 * SubGHz -> **Custom buttons for Keeloq / Alutech AT4N / Nice Flor S / Somfy Telis / Security+ 2.0** - now you can use arrow buttons to send signal with different button code
@@ -67,11 +69,12 @@ Our Discord Community:
 Also check the changelog in releases for latest updates!
 
 ### Current modified and new Sub-GHz protocols list:
-Thanks to Official team (to their SubGHz Developer, Skorp) for implementing decoders for these protocols.
+Thanks to Official team (to their SubGHz Developer, Skorp) for implementing decoders for these protocols in OFW.
 
 Keeloq [Not ALL systems supported for decode or emulation yet!] - [Supported manufacturers list](https://0bin.net/paste/VwR2lNJY#WH9vnPgvcp7w6zVKucFCuNREKAcOij8KsJ6vqLfMn3b)
 
 Encoders or sending made by @xMasterX:
+- Nero Radio 57bit (+ 56bit encoder improvements)
 - Keeloq: HCS101
 - Keeloq: AN-Motors
 - Keeloq: JCM Tech
@@ -103,7 +106,7 @@ Encoders made by @assasinfil & @xMasterX:
 
 ## Please support development of the project
 The majority of this project is developed and maintained by me, @xMasterX.
-I'm unemployed because of the war, and the only income I receive is from your donations.
+I'm unemployed, and the only income I receive is from your donations.
 Our team is small and the guys are working on this project as much as they can solely based on the enthusiasm they have for this project and the community.
 - @assasinfil - SubGHz
 - @Svaarich - UI design and animations
@@ -115,7 +118,6 @@ The amount of work done on this project is huge and we need your support, no mat
 Also, regarding our releases, every build has and always will be free and open-source. There will be no paywall releases or closed-source apps within the firmware. As long as I am working on this project it will never happen.
 You can support us by using links or addresses below:
 * **Boosty** (patreon alternative): https://boosty.to/mmxdev
-* Ko-Fi: https://ko-fi.com/masterx
 * cloudtips (only RU payments accepted): https://pay.cloudtips.ru/p/7b3e9d65
 * YooMoney (only RU payments accepted): https://yoomoney.ru/fundraise/XA49mgQLPA0.221209
 * USDT(TRC20): `TSXcitMSnWXUFqiUfEXrTVpVewXy2cYhrs`
@@ -159,6 +161,7 @@ You can support us by using links or addresses below:
 - **UART Terminal** [(by cool4uma)](https://github.com/cool4uma/UART_Terminal/tree/main)
 - **ProtoView** [(by antirez)](https://github.com/antirez/protoview)
 - **SWD Probe** [(by g3gg0)](https://github.com/g3gg0/flipper-swd_probe)
+- IR Scope [(by kallanreed)](https://github.com/DarkFlippers/unleashed-firmware/pull/407)
 
 Games:
 - DOOM (fixed) [(by p4nic4ttack)](https://github.com/p4nic4ttack/doom-flipper-zero/)
@@ -173,6 +176,7 @@ Games:
 - Solitaire [(by teeebor)](https://github.com/teeebor/flipper_games)
 - BlackJack [(by teeebor)](https://github.com/teeebor/flipper_games)
 - 2048 game [(by eugene-kirzhanov)](https://github.com/eugene-kirzhanov/flipper-zero-2048-game)
+- Bomberduck [(by leo-need-more-coffee)](https://github.com/leo-need-more-coffee/flipperzero-bomberduck)
 
 
 # Instructions

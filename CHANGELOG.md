@@ -1,15 +1,19 @@
-### New changes
-* SubGHz: AN-Motors AT4 - Add manually fixes
-* SubGHz: StarLine ignore option (in Read -> Config) (by @gid9798 | PR #410)
-* Plugins: Update **TOTP (Authenticator)** [(by akopachov)](https://github.com/akopachov/flipper-zero_authenticator) (Steam guard support)
-* Plugins: Update **UART Terminal** [(by cool4uma)](https://github.com/cool4uma/UART_Terminal/tree/main) (AT commands support)
-* Plugins: Add IR Scope app. (by @kallanreed | PR #407)
-* OFW: scripts: sconsdist: added stub file artifact for older ufbt 
-* OFW: Graphics cleanup and icon rotation
-* OFW: Moved ufbt to fbt codebase
-* OFW: SD Driver: do not cache sd status.
-* OFW: Furi: more gpio checks in HAL
-* OFW: WeatherStation: fix protocol TX141TH-BV2
+### New changes 
+* If you have copied any apps manually into `apps` folder - remove `apps` folder or that specific apps you copied on your microSD before installing this release to avoid issues!
+* Plugins: RFID and iButton Fuzzer remove excessive free's (thanks @Willy-JL)
+* Plugins: Use COUNT_OF in mouse jiggler
+* Plugins: Added Numpad keyboard to HID app (by @clipboard1 | PR #452)
+* About: Don't show 00 on about screens
+* SubGHz: Combine FuriString allocs and other small changes
+* Infrared: Updated universal remote assets (by @amec0e | PR #454)
+* Update slideshow: Replace QR code with good old link
+* OFW: Various Furi/FuriHal bug fixes and improvements -> **Breaking API change, api was changed from 24.x to 26.x** 
+* OFW: Loader refactoring, part 1 -> **Breaking API change, api was changed from 23.x to 24.x** **(this will make your manually copied plugins not work, update them in same way you installed them, or delete `apps` folder and then install firmware, if you using extra pack builds (with `e` in version) all apps in _Extra will be updated automatically)**
+* OFW: Dolphin builder in ufbt; minor ufbt/fbt improvements
+* OFW: Added API version to device info 
+* OFW: Gui: relax some asserts in view
+* OFW: Move gauge calibration to separate header, add f18 calibration
+* OFW: Fix TERMINFO on Linux systems 
 
 #### [🎲 Download latest extra apps pack](https://github.com/xMasterX/all-the-plugins/archive/refs/heads/main.zip)
 
@@ -19,7 +23,6 @@
 
 ## Please support development of the project
 * **Boosty** (patreon alternative): https://boosty.to/mmxdev
-* Ko-Fi: https://ko-fi.com/masterx
 * cloudtips (only RU payments accepted): https://pay.cloudtips.ru/p/7b3e9d65
 * YooMoney (only RU payments accepted): https://yoomoney.ru/fundraise/XA49mgQLPA0.221209
 * USDT(TRC20): `TSXcitMSnWXUFqiUfEXrTVpVewXy2cYhrs`
