@@ -1,5 +1,6 @@
 #pragma once
 #include "../registry.h"
+#include "../subghz_protocol_registry.h"
 
 #include "princeton.h"
 #include "keeloq.h"
@@ -43,13 +44,11 @@
 #include "alutech_at_4n.h"
 #include "kinggates_stylo_4k.h"
 #include "bin_raw.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-extern const SubGhzProtocolRegistry subghz_protocol_registry;
-
-#ifdef __cplusplus
-}
-#endif
+#include "mastercode.h"
+#include "honeywell.h"
+#include "legrand.h"
+#include "dickert_mahs.h"
+#include "gangqi.h"
+#include "marantec24.h"
+#include "hollarm.h"
+#include "hay21.h"

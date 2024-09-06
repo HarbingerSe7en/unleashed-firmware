@@ -14,16 +14,21 @@
 #include "../helpers/archive_favorites.h"
 #include "gui/modules/file_browser_worker.h"
 
-#define MAX_LEN_PX 110
+#define MAX_LEN_PX   110
 #define MAX_NAME_LEN 255
-#define MAX_EXT_LEN 6
+#define MAX_EXT_LEN  6
 #define FRAME_HEIGHT 12
-#define MENU_ITEMS 5u
-#define MOVE_OFFSET 5u
+#define MENU_ITEMS   5u
+#define MOVE_OFFSET  5u
+
+#define CLIPBOARD_MODE_OFF  (0U)
+#define CLIPBOARD_MODE_CUT  (1U)
+#define CLIPBOARD_MODE_COPY (2U)
 
 typedef enum {
     ArchiveTabFavorites,
     ArchiveTabSubGhz,
+    ArchiveTabSubGhzRemote,
     ArchiveTabLFRFID,
     ArchiveTabNFC,
     ArchiveTabInfrared,
@@ -42,6 +47,11 @@ typedef enum {
     ArchiveBrowserEventFileMenuRun,
     ArchiveBrowserEventFileMenuPin,
     ArchiveBrowserEventFileMenuRename,
+    ArchiveBrowserEventFileMenuNewDir,
+    ArchiveBrowserEventFileMenuCut,
+    ArchiveBrowserEventFileMenuCopy,
+    ArchiveBrowserEventFileMenuPaste_Cut,
+    ArchiveBrowserEventFileMenuPaste_Copy,
     ArchiveBrowserEventFileMenuDelete,
     ArchiveBrowserEventFileMenuInfo,
     ArchiveBrowserEventFileMenuShow,
@@ -92,6 +102,9 @@ typedef struct {
     uint8_t menu_idx;
     bool menu;
     menu_array_t context_menu;
+    bool menu_file_manage;
+    bool menu_can_switch;
+    uint8_t clipboard_mode;
 
     bool move_fav;
     bool list_loading;
@@ -102,6 +115,8 @@ typedef struct {
     int32_t array_offset;
     int32_t list_offset;
     size_t scroll_counter;
+
+    uint32_t button_held_for_ticks;
 } ArchiveBrowserViewModel;
 
 void archive_browser_set_callback(
@@ -111,6 +126,9 @@ void archive_browser_set_callback(
 
 View* archive_browser_get_view(ArchiveBrowserView* browser);
 
-ArchiveBrowserView* browser_alloc();
-
+ArchiveBrowserView* browser_alloc(void);
 void browser_free(ArchiveBrowserView* browser);
+
+void archive_browser_clipboard_set_mode(ArchiveBrowserView* browser, uint8_t mode);
+
+void archive_browser_clipboard_reset(ArchiveBrowserView* browser);

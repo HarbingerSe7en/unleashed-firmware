@@ -17,25 +17,25 @@ void subghz_scene_set_cnt_on_enter(void* context) {
         scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneSetType);
 
     switch(state) {
-    case SubmenuIndexBFTClone:
+    case SetTypeBFTClone:
         byte_input_set_header_text(byte_input, "Enter COUNTER in hex");
         byte_input_set_result_callback(
             byte_input,
             subghz_scene_set_cnt_byte_input_callback,
             NULL,
             subghz,
-            subghz->txrx->secure_data->cnt,
+            subghz->secure_data->cnt,
             2);
         break;
-    case SubmenuIndexFaacSLH_433:
-    case SubmenuIndexFaacSLH_868:
-        byte_input_set_header_text(byte_input, "Enter COUNTER in hex, 20bits");
+    case SetTypeFaacSLH_Manual_433:
+    case SetTypeFaacSLH_Manual_868:
+        byte_input_set_header_text(byte_input, "Enter COUNTER in hex 20 bits");
         byte_input_set_result_callback(
             byte_input,
             subghz_scene_set_cnt_byte_input_callback,
             NULL,
             subghz,
-            subghz->txrx->secure_data->cnt,
+            subghz->secure_data->cnt,
             3);
         break;
     default:

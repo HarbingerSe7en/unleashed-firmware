@@ -3,6 +3,39 @@
 ### If your system is not added here that doesn't mean flipper don't support it! Look into add manually menu, and search for your manufacturers inscturctions!
 ### Also many supported systems can be used only from `Read` mode, `Add Manually` is used only to make new remotes that can be binded with receiver
 
+## FAAC SLH (NEW!)
+1. Create new remote with randomly generated serial: Go to SubGHz -> Add Manually -> FAAC SLH (select your frequency)
+2. Open your new remote file
+3. Open your receiver box, find programming button on the receiver board.
+4. Hold Up arrow button on the flipper to send programming signal - at same time press and hold programming button on the receiver board.
+5. Led on the receiver board will light on, then off, then on, then off again then on again
+6. Release all buttons
+7. Press send button on the flipper couple times holding it for 1-3 seconds
+8. Done!
+Watch this video to learn more : https://www.youtube.com/watch?v=NfZmMy37XUs
+
+...
+How to get Seed value from your original remote or bind new remote using existing (master) remote? 
+1. Go to SubGHz -> Read - Select frequency 868.35 or 433.92 and modulation AM650
+2. Hold two buttons on the original master remote until led turns on
+3. Click one button that you want to get seed from (Seed is unique for each button on original remote!)
+4. You will get signal in the read screen on flipper, open that and see your original remote seed for button you used
+5. You can create new remote using that seed and bind that to receiver without opening the box! Faac has procedure that allows to bind new remotes using master remote, you can use flipper for that 
+6. Go to SubGHz -> Add Manually -> FAAC SLH Man. (your Freq)
+7. Enter those values -> REPLACE `R` with any random digits like 1,2,3..
+FIX -> A0 RR RR R6
+COUNTER -> 00 00 02
+SEED -> Your seed from the remote button you got earlier
+8. Flipper will act as new remote, press Send button couple times near the receiver to register new remote
+9. Done!
+
+## Dea Mio
+1. Create new remote with randomly generated serial: Go to SubGHz -> Add Manually -> Dea Mio 433Mhz
+2. Open your new remote file
+3. Right arrow button on the flipper simulates press of hidden button in original remote
+4. Send button simulates one of basic buttons of the remote, can be programmed into the receiver
+5. Follow manufacturer instructions on new remotes programming
+
 ## AN-Motors AT4
 
 **This instruction for older boards, if your has no** `Learn` **button but has buttons** `F`, `CL`, `+`, `-` **read instruction from Alutech AT4N**
@@ -60,6 +93,8 @@ Watch this videos to learn more (videos in Russian language): https://www.youtub
 
 ## BFT Mitto 
 
+How to create new remote and bind it to receiver (will not conflict with original remotes):
+
 1. Create new remote with randomly generated serial: Go to SubGHz -> Add Manually -> BFT Mitto 433Mhz
 2. Open your new remote file
 3. You need to be in minimum 3 meters to receiver
@@ -67,6 +102,37 @@ Watch this videos to learn more (videos in Russian language): https://www.youtub
 5. Original Remote: Momentarily press button that opens device
 6. Long press (Right Arrow) - (0xF button - Btn:F) on Flipper for like 3-5 sec
 7. Done?
+
+OR
+
+1. Create new remote with randomly generated serial: Go to SubGHz -> Add Manually -> BFT Mitto 433Mhz
+2. Open your new remote file
+3. Open your receiver board box
+4. **Watch this video**: https://www.youtube.com/watch?v=5QXMBKI_-Ls
+5. Long press (Right Arrow) - (0xF button - Btn:F) on Flipper for like 3-5 sec -> Will act like holding Button 1 & 2 on original remote as shown on video
+6. Done?
+
+--
+
+How to get seed to make full clone of your remote (**will conflict with original remote!!!!!**):
+
+**WARNING!!!! This method can desync your original remote, please avoid using it! It can be used in rare cases like when your remote works poorly or has broken buttons and you want to replace it with flipper**
+
+1. Open `Read` in SubGHz on your flipper
+2. (ONLY FOR ORIGINAL REMOTES) Hold all buttons on your remote at same time, example -> for 2 button remote - press them both at same time and hold OR press hidden button on back of remote with a pin or paper clip
+3. You will receive signal on your flipper, open that signal and see `Fix:` value, it should start from `F` like `F00F1C9B`
+4. If `Fix:` is showing first `F` see `Hop:` value -> This is your remote Seed
+5. Write down Hop value
+6. Press button on your remote that you want to clone and receive its signal on your flipper
+7. Open and write down `Fix:` value where first digit will be same as your button ID `Btn:`
+8. Create new remote using BFT Mitto [Manual] - Enter FIX from step 7, enter counter `FF F9`, enter seed from step 5
+9. Using counter values like `FF F9` can help bypassing current original remote counter value, and in result it also can fully desync original remote, only one remote can work at same time using this method
+10. Throw away your original remote since now it needs to be re-added into receiver board :C
+
+## CAME Atomo
+
+1. Use google to find instructions - `how to program new CAME Atomo remote into receiver`
+2. Watch this video to learn more (video in Russian language): https://www.youtube.com/watch?v=XeHUwfcSS30
 
 ## Nice Flor S
 
@@ -104,6 +170,7 @@ garage/gate.
 #### Follow links below to find more detailed instructions!!!
 
 #### Materials used:
+- [FAAC SLH](https://www.youtube.com/watch?v=NfZmMy37XUs)
 - [Somfy Telis](https://pushstack.wordpress.com/somfy-rts-protocol/)
 - [BFT Mitto](https://www.retroremotes.com.au/wp-content/uploads/2017/03/BFT-MITTO-2-4-19-6-17.pdf)
 - [NICE FLOX2R Receiver Programming](https://apollogateopeners.com/store/pdf/apollo-flor-s-receiver-programming-guide.pdf)

@@ -8,7 +8,7 @@
 #include "../blocks/generic.h"
 #include "../blocks/math.h"
 
-#define TAG "SubGhzProtocoKingGates_stylo_4k"
+#define TAG "SubGhzProtocoKingGatesStylo4k"
 
 static const SubGhzBlockConst subghz_protocol_kinggates_stylo_4k_const = {
     .te_short = 400,
@@ -156,7 +156,7 @@ static bool subghz_protocol_kinggates_stylo_4k_gen_data(
     instance->generic.cnt = decrypt & 0xFFFF;
 
     if(instance->generic.cnt < 0xFFFF) {
-        if((instance->generic.cnt + furi_hal_subghz_get_rolling_counter_mult()) >= 0xFFFF) {
+        if((instance->generic.cnt + furi_hal_subghz_get_rolling_counter_mult()) > 0xFFFF) {
             instance->generic.cnt = 0;
         } else {
             instance->generic.cnt += furi_hal_subghz_get_rolling_counter_mult();
@@ -197,9 +197,7 @@ static bool subghz_protocol_encoder_kinggates_stylo_4k_get_upload(
     furi_assert(instance);
 
     // Gen new key
-    if(subghz_protocol_kinggates_stylo_4k_gen_data(instance, btn)) {
-        //ToDo if you need to add a callback to automatically update the data on the display
-    } else {
+    if(!subghz_protocol_kinggates_stylo_4k_gen_data(instance, btn)) {
         return false;
     }
 

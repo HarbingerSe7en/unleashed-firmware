@@ -1,7 +1,6 @@
 #include "subghz_read_raw.h"
 #include "../subghz_i.h"
 
-#include <math.h>
 #include <furi.h>
 #include <furi_hal.h>
 #include <input/input.h>
@@ -9,7 +8,7 @@
 
 #include <assets_icons.h>
 #define SUBGHZ_READ_RAW_RSSI_HISTORY_SIZE 100
-#define TAG "SubGhzReadRAW"
+#define TAG                               "SubGhzReadRaw"
 
 struct SubGhzReadRAW {
     View* view;
@@ -31,6 +30,7 @@ typedef struct {
     bool raw_send_only;
     float raw_threshold_rssi;
     bool not_showing_samples;
+    SubGhzRadioDeviceType device_type;
 } SubGhzReadRAWModel;
 
 void subghz_read_raw_set_callback(
@@ -58,6 +58,14 @@ void subghz_read_raw_add_data_statusbar(
         true);
 }
 
+void subghz_read_raw_set_radio_device_type(
+    SubGhzReadRAW* instance,
+    SubGhzRadioDeviceType device_type) {
+    furi_assert(instance);
+    with_view_model(
+        instance->view, SubGhzReadRAWModel * model, { model->device_type = device_type; }, true);
+}
+
 void subghz_read_raw_add_data_rssi(SubGhzReadRAW* instance, float rssi, bool trace) {
     furi_assert(instance);
     uint8_t u_rssi = 0;
@@ -65,7 +73,7 @@ void subghz_read_raw_add_data_rssi(SubGhzReadRAW* instance, float rssi, bool tra
     if(rssi < SUBGHZ_RAW_THRESHOLD_MIN) {
         u_rssi = 0;
     } else {
-        u_rssi = (uint8_t)((rssi - SUBGHZ_RAW_THRESHOLD_MIN) / 2.7);
+        u_rssi = (uint8_t)((rssi - SUBGHZ_RAW_THRESHOLD_MIN) / 2.7f);
     }
 
     with_view_model(
@@ -79,7 +87,7 @@ void subghz_read_raw_add_data_rssi(SubGhzReadRAW* instance, float rssi, bool tra
                 model->rssi_history[model->ind_write] = u_rssi;
             }
 
-            if(model->ind_write > SUBGHZ_READ_RAW_RSSI_HISTORY_SIZE) {
+            if(model->ind_write >= SUBGHZ_READ_RAW_RSSI_HISTORY_SIZE) {
                 model->rssi_history_end = true;
                 model->ind_write = 0;
             }
@@ -268,7 +276,7 @@ void subghz_read_raw_draw_threshold_rssi(Canvas* canvas, SubGhzReadRAWModel* mod
 
     if(model->raw_threshold_rssi > SUBGHZ_RAW_THRESHOLD_MIN) {
         uint8_t x = 118;
-        y -= (uint8_t)((model->raw_threshold_rssi - SUBGHZ_RAW_THRESHOLD_MIN) / 2.7);
+        y -= (uint8_t)((model->raw_threshold_rssi - SUBGHZ_RAW_THRESHOLD_MIN) / 2.7f);
 
         uint8_t width = 3;
         for(uint8_t i = 0; i < x; i += width * 2) {
@@ -288,9 +296,15 @@ void subghz_read_raw_draw(Canvas* canvas, SubGhzReadRAWModel* model) {
     canvas_draw_str(canvas, 35, 7, furi_string_get_cstr(model->preset_str));
 
     if(model->not_showing_samples) {
-        canvas_draw_str(canvas, 77, 7, furi_hal_subghz_get_radio_type() ? "R: Ext" : "R: Int");
+        // TODO
+        canvas_draw_str(
+            canvas,
+            77,
+            7,
+            (model->device_type == SubGhzRadioDeviceTypeInternal) ? "R: Int" : "R: Ext");
     } else {
-        canvas_draw_str(canvas, 70, 7, furi_hal_subghz_get_radio_type() ? "E" : "I");
+        canvas_draw_str(
+            canvas, 70, 7, (model->device_type == SubGhzRadioDeviceTypeInternal) ? "I" : "E");
     }
 
     canvas_draw_str_aligned(
@@ -329,7 +343,7 @@ void subghz_read_raw_draw(Canvas* canvas, SubGhzReadRAWModel* model) {
     case SubGhzReadRAWStatusLoadKeyTX:
     case SubGhzReadRAWStatusLoadKeyTXRepeat:
         graphics_mode = 0;
-        elements_button_center(canvas, "Send");
+        elements_button_center(canvas, "Hold to repeat");
         break;
 
     case SubGhzReadRAWStatusStart:

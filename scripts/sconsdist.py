@@ -9,6 +9,7 @@ from os.path import exists, join, relpath, basename, split
 
 from ansi.color import fg
 from flipper.app import App
+from flipper.assets.tarball import FLIPPER_TAR_FORMAT, tar_sanitizer_filter
 from update import Main as UpdateMain
 
 
@@ -63,7 +64,13 @@ class Main(App):
         return dist_target_path
 
     def note_dist_component(self, component: str, extension: str, srcpath: str) -> None:
-        self._dist_components[f"{component}.{extension}"] = srcpath
+        component_key = f"{component}.{extension}"
+        if component_key in self._dist_components:
+            self.logger.debug(
+                f"Skipping duplicate component {component_key} in {srcpath}"
+            )
+            return
+        self._dist_components[component_key] = srcpath
 
     def get_dist_file_name(self, dist_artifact_type: str, filetype: str) -> str:
         return f"{self.DIST_FILE_PREFIX}{self.target}-{dist_artifact_type}-{self.args.suffix}.{filetype}"
@@ -83,17 +90,6 @@ class Main(App):
         for foldertype in ("sdk_headers", "lib"):
             if exists(sdk_folder := join(obj_directory, foldertype)):
                 self.note_dist_component(foldertype, "dir", sdk_folder)
-
-        # TODO: remove this after everyone migrates to new uFBT
-        self.create_zip_stub("lib")
-
-    def create_zip_stub(self, foldertype):
-        with zipfile.ZipFile(
-            self.get_dist_path(self.get_dist_file_name(foldertype, "zip")),
-            "w",
-            zipfile.ZIP_DEFLATED,
-        ) as _:
-            pass
 
     def copy(self) -> int:
         self._dist_components: dict[str, str] = dict()
@@ -170,12 +166,12 @@ class Main(App):
             "update.dir",
             "sdk_headers.dir",
             "lib.dir",
-            "debug.dir",
             "scripts.dir",
         )
 
+        sdk_bundle_path = self.get_dist_path(self.get_dist_file_name("sdk", "zip"))
         with zipfile.ZipFile(
-            self.get_dist_path(self.get_dist_file_name("sdk", "zip")),
+            sdk_bundle_path,
             "w",
             zipfile.ZIP_DEFLATED,
         ) as zf:
@@ -217,6 +213,10 @@ class Main(App):
                 ),
             )
 
+        self.logger.info(
+            fg.boldgreen(f"SDK bundle can be found at:\n\t{sdk_bundle_path}")
+        )
+
     def bundle_update_package(self):
         self.logger.debug(
             f"Generating update bundle with version {self.args.version} for {self.target}"
@@ -251,13 +251,6 @@ class Main(App):
             )
         bundle_args.extend(self.other_args)
         
-        log_custom_fz_name = (
-            environ.get("CUSTOM_FLIPPER_NAME", None)
-            or ""
-        )
-        if (log_custom_fz_name != "") and (len(log_custom_fz_name) <= 8) and (log_custom_fz_name.isalnum()) and (log_custom_fz_name.isascii()):
-            self.logger.info(f"Flipper Custom Name is set:\n\tName: {log_custom_fz_name} : length - {len(log_custom_fz_name)} chars")
-
         if (bundle_result := UpdateMain(no_exit=True)(bundle_args)) == 0:
             self.note_dist_component("update", "dir", bundle_dir)
             self.logger.info(
@@ -274,12 +267,15 @@ class Main(App):
                 ),
                 "w:gz",
                 compresslevel=9,
-                format=tarfile.USTAR_FORMAT,
+                format=FLIPPER_TAR_FORMAT,
             ) as tar:
                 self.note_dist_component(
                     "update", "tgz", self.get_dist_path(bundle_tgz)
                 )
-                tar.add(bundle_dir, arcname=bundle_dir_name)
+
+                tar.add(
+                    bundle_dir, arcname=bundle_dir_name, filter=tar_sanitizer_filter
+                )
         return bundle_result
 
 

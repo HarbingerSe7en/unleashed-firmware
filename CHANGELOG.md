@@ -1,50 +1,87 @@
-### New changes 
-* If you have copied any apps manually into `apps` folder - remove `apps` folder or that specific apps you copied on your microSD before installing this release to avoid issues!
-* Plugins: RFID and iButton Fuzzer remove excessive free's (thanks @Willy-JL)
-* Plugins: Use COUNT_OF in mouse jiggler
-* Plugins: Added Numpad keyboard to HID app (by @clipboard1 | PR #452)
-* About: Don't show 00 on about screens
-* SubGHz: Combine FuriString allocs and other small changes
-* Infrared: Updated universal remote assets (by @amec0e | PR #454)
-* Update slideshow: Replace QR code with good old link
-* OFW: Various Furi/FuriHal bug fixes and improvements -> **Breaking API change, api was changed from 24.x to 26.x** 
-* OFW: Loader refactoring, part 1 -> **Breaking API change, api was changed from 23.x to 24.x** **(this will make your manually copied plugins not work, update them in same way you installed them, or delete `apps` folder and then install firmware, if you using extra pack builds (with `e` in version) all apps in _Extra will be updated automatically)**
-* OFW: Dolphin builder in ufbt; minor ufbt/fbt improvements
-* OFW: Added API version to device info 
-* OFW: Gui: relax some asserts in view
-* OFW: Move gauge calibration to separate header, add f18 calibration
-* OFW: Fix TERMINFO on Linux systems 
+## Main changes
+- SubGHz:
+    - Add new protocols (by @xMasterX) (big thanks to @Skorpionm for help with GangQi and Hollarm protocols!): 
+        - Marantec24 (static 24 bit) with add manually support
+        - GangQi (static 34 bit) with button parsing and add manually support (thanks to @mishamyte for captures and testing)
+        - Hollarm (static 42 bit) with button parsing and add manually support (thanks to @mishamyte for captures)
+        - Hay21 (dynamic 21 bit) with button parsing
+- 125kHz RFID: 
+    - OFW PR 3869: Fix detection of GProx II cards and false detection of other cards (by @Astrrra)
+    - OFW PR 3868: Fix Guard GProxII False Positive and 36-bit Parsing (by @zinongli)
+- NFC:
+    - Saflok parser improvements (by @zinongli & @xtruan & @zacharyweiss & @evilmog & @Arkwin)
+    - OFW PR 3766: Fix crash on Ultralight unlock (by @Astrrra) 
+* OFW: Infrared: Universal AC - Add Airwell AW-HKD012-N91 
+* OFW: Broken file interaction fixes
+* OFW: Add the Procrastination animation
+* Apps: **Check out more Apps updates and fixes by following** [this link](https://github.com/xMasterX/all-the-plugins/commits/dev)
+## Other changes
+* OFW: Infrared button operation fails now shows more informative messages
+* OFW: Loader: Warn about missing SD card for main apps
+* OFW: Desktop: Sanity check PIN length for good measure
+* OFW: DialogEx: Fix NULL ptr crash
+* OFW: Debug: use proper hook for handle_exit in flipperapps
+* OFW: Clean up of LFS traces
+* OFW: Proper integer parsing
+* OFW: SubGhz: Fix RPC status for ButtonRelease event
+* OFW: CCID: App changes
+* OFW: 5V on GPIO control for ext. modules
+* OFW: Gui: Add up and down button drawing functions to GUI elements
+* OFW: Gui: change dialog_ex text ownership model
+* OFW: Publishing T5577 page 1 block count macro
+<br><br>
+#### Known NFC post-refactor regressions list: 
+- Mifare Mini clones reading is broken (original mini working fine) (OFW)
+- NFC CLI was removed with refactoring (OFW) (will be back soon)
 
-#### [🎲 Download latest extra apps pack](https://github.com/xMasterX/all-the-plugins/archive/refs/heads/main.zip)
+----
 
 [-> How to install firmware](https://github.com/DarkFlippers/unleashed-firmware/blob/dev/documentation/HowToInstall.md)
 
 [-> Download qFlipper (official link)](https://flipperzero.one/update)
 
 ## Please support development of the project
-* **Boosty** (patreon alternative): https://boosty.to/mmxdev
-* cloudtips (only RU payments accepted): https://pay.cloudtips.ru/p/7b3e9d65
-* YooMoney (only RU payments accepted): https://yoomoney.ru/fundraise/XA49mgQLPA0.221209
-* USDT(TRC20): `TSXcitMSnWXUFqiUfEXrTVpVewXy2cYhrs`
-* BCH: `qquxfyzntuqufy2dx0hrfr4sndp0tucvky4sw8qyu3`
-* ETH/BSC/ERC20-Tokens: `darkflippers.eth` (or `0xFebF1bBc8229418FF2408C07AF6Afa49152fEc6a`)
-* BTC: `bc1q0np836jk9jwr4dd7p6qv66d04vamtqkxrecck9`
-* DOGE: `D6R6gYgBn5LwTNmPyvAQR6bZ9EtGgFCpvv`
-* LTC: `ltc1q3ex4ejkl0xpx3znwrmth4lyuadr5qgv8tmq8z9`
-* XMR (Monero): `41xUz92suUu1u5Mu4qkrcs52gtfpu9rnZRdBpCJ244KRHf6xXSvVFevdf2cnjS7RAeYr5hn9MsEfxKoFDRSctFjG5fv1Mhn`
-* TON: `EQCOqcnYkvzOZUV_9bPE_8oTbOrOF03MnF-VcJyjisTZmpGf`
+|Service|Remark|QR Code|Link/Wallet|
+|-|-|-|-|
+|**Patreon**||<div align="center"><a href="https://github.com/user-attachments/assets/a88a90a5-28c3-40b4-864a-0c0b79494a42"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|https://patreon.com/mmxdev|
+|**Boosty**|patreon alternative|<div align="center"><a href="https://github.com/user-attachments/assets/893c0760-f738-42c1-acaa-916019a7bdf8"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|https://boosty.to/mmxdev|
+|cloudtips|only RU payments accepted|<div align="center"><a href="https://github.com/user-attachments/assets/5de31d6a-ef24-4d30-bd8e-c06af815332a"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|https://pay.cloudtips.ru/p/7b3e9d65|
+|YooMoney|only RU payments accepted|<div align="center"><a href="https://github.com/user-attachments/assets/33454f79-074b-4349-b453-f94fdadc3c68"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|https://yoomoney.ru/fundraise/XA49mgQLPA0.221209|
+|USDT|(TRC20)|<div align="center"><a href="https://github.com/user-attachments/assets/0500498d-18ed-412d-a1a4-8a66d0b6f057"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`TSXcitMSnWXUFqiUfEXrTVpVewXy2cYhrs`|
+|ETH|(BSC/ERC20-Tokens)|<div align="center"><a href="https://github.com/user-attachments/assets/0f323e98-c524-4f41-abb2-f4f1cec83ab6"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`darkflippers.eth` (or `0xFebF1bBc8229418FF2408C07AF6Afa49152fEc6a`)|
+|BTC||<div align="center"><a href="https://github.com/user-attachments/assets/5a904d45-947e-4b92-9f0f-7fbaaa7b37f8"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`bc1q0np836jk9jwr4dd7p6qv66d04vamtqkxrecck9`|
+|SOL|(Solana/Tokens)|<div align="center"><a href="https://github.com/user-attachments/assets/ab33c5e0-dd59-497b-9c91-ceb89c36b34d"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`DSgwouAEgu8iP5yr7EHHDqMNYWZxAqXWsTEeqCAXGLj8`|
+|DOGE||<div align="center"><a href="https://github.com/user-attachments/assets/2937edd0-5c85-4465-a444-14d4edb481c0"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`D6R6gYgBn5LwTNmPyvAQR6bZ9EtGgFCpvv`|
+|LTC||<div align="center"><a href="https://github.com/user-attachments/assets/441985fe-f028-4400-83c1-c215760c1e74"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`ltc1q3ex4ejkl0xpx3znwrmth4lyuadr5qgv8tmq8z9`|
+|BCH||<div align="center"><a href="https://github.com/user-attachments/assets/7f365976-19a3-4777-b17e-4bfba5f69eff"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`qquxfyzntuqufy2dx0hrfr4sndp0tucvky4sw8qyu3`|
+|XMR|(Monero)|<div align="center"><a href="https://github.com/user-attachments/assets/96186c06-61e7-4b4d-b716-6eaf1779bfd8"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`41xUz92suUu1u5Mu4qkrcs52gtfpu9rnZRdBpCJ244KRHf6xXSvVFevdf2cnjS7RAeYr5hn9MsEfxKoFDRSctFjG5fv1Mhn`|
+|TON||<div align="center"><a href="https://github.com/user-attachments/assets/92a57e57-7462-42b7-a342-6f22c6e600c1"><img src="https://github.com/user-attachments/assets/da3a864d-d1c7-42cc-8a86-6fcaf26663ec" alt="QR image"/></a></div>|`UQCOqcnYkvzOZUV_9bPE_8oTbOrOF03MnF-VcJyjisTZmsxa`|
 
-### Thanks to our sponsors:
-callmezimbra, Quen0n, MERRON, grvpvl (lvpvrg), art_col, ThurstonWaffles, Moneron, UterGrooll, LUCFER, Northpirate, zloepuzo, T.Rat, Alexey B., ionelife, ...
+#### Thanks to our sponsors who supported project in the past and special thanks to sponsors who supports us on regular basis:
+@mishamyte, ClaraCrazy, Pathfinder [Count Zero cDc], callmezimbra, Quen0n, MERRON, grvpvl (lvpvrg), art_col, ThurstonWaffles, Moneron, UterGrooll, LUCFER, Northpirate, zloepuzo, T.Rat, Alexey B., ionelife, ...
 and all other great people who supported our project and me (xMasterX), thanks to you all!
 
-**Note: To avoid issues with .dfu, prefer installing using .tgz with qFlipper, web updater or by self update package, all needed assets will be installed**
 
-**Recommended option - Web Updater**
+## **Recommended update option - Web Updater**
 
-What means `n` or `e` in - `flipper-z-f7-update-(version)(n / e).tgz` ? - `n` means this build comes without our custom animations, only official flipper animations, 
-`e` means build has extra apps pack preinstalled
+### What `r`, `e`, ` `, `c` means? What I need to download if I don't want to use Web updater?
+What build I should download and what this name means - `flipper-z-f7-update-(version)(r / e / c).tgz` ? <br>
+`flipper-z` = for Flipper Zero device<br>
+`f7` = Hardware version - same for all flipper zero devices<br>
+`update` = Update package, contains updater, all assets (plugins, IR libs, etc.), and firmware itself<br>
+`(version)` = Firmware version<br>
+| Designation | [Base Apps](https://github.com/xMasterX/all-the-plugins#default-pack) | [Extra Apps](https://github.com/xMasterX/all-the-plugins#extra-pack) | ⚠️RGB mode* |
+|-----|:---:|:---:|:---:|
+| ` ` | ✅ |  |  |
+| `c` |  |  |  |
+| `e` | ✅ | ✅ |  |
+| `r` | ✅ | ✅ | ⚠️ |
 
-Self-update package (update from microSD) - `flipper-z-f7-update-(version).zip` or download `.tgz` for mobile app / qFlipper
+⚠️This is [hardware mod](https://github.com/quen0n/flipperzero-firmware-rgb#readme), works only on modded flippers! do not install on non modded device!
+
+Firmware Self-update package (update from microSD) - `flipper-z-f7-update-(version).tgz` for mobile app / qFlipper / web<br>
+Archive of `scripts` folder (contains scripts for FW/plugins development) - `flipper-z-any-scripts-(version).tgz`<br>
+SDK files for plugins development and uFBT - `flipper-z-f7-sdk-(version).zip`
+
 
 

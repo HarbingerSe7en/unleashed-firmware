@@ -1,5 +1,5 @@
+#include "../subghz.h"
 #include "../subghz_i.h"
-#include "../helpers/subghz_custom_event.h"
 
 void subghz_scene_delete_raw_callback(GuiButtonType result, InputType type, void* context) {
     furi_assert(context);
@@ -30,7 +30,7 @@ void subghz_scene_delete_raw_on_enter(void* context) {
 
     widget_add_string_element(
         subghz->widget, 38, 25, AlignLeft, AlignTop, FontSecondary, "RAW signal");
-    subghz_get_frequency_modulation(subghz, frequency_str, modulation_str);
+    subghz_txrx_get_frequency_and_modulation(subghz->txrx, frequency_str, modulation_str, false);
     widget_add_string_element(
         subghz->widget,
         35,

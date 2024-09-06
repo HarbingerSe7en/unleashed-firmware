@@ -1,10 +1,9 @@
 #pragma once
 
-#include "helpers/dolphin_deed.h"
-
-#include <gui/view.h>
-#include <core/pubsub.h>
 #include <stdbool.h>
+#include <core/pubsub.h>
+
+#include "helpers/dolphin_deed.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,18 +25,11 @@ typedef enum {
     DolphinPubsubEventUpdate,
 } DolphinPubsubEvent;
 
-#define DOLPHIN_DEED(deed)                                        \
-    do {                                                          \
-        Dolphin* dolphin = (Dolphin*)furi_record_open("dolphin"); \
-        dolphin_deed(dolphin, deed);                              \
-        furi_record_close("dolphin");                             \
-    } while(0)
-
 /** Deed complete notification. Call it on deed completion.
  * See dolphin_deed.h for available deeds. In futures it will become part of assets.
  * Thread safe, async
  */
-void dolphin_deed(Dolphin* dolphin, DolphinDeed deed);
+void dolphin_deed(DolphinDeed deed);
 
 /** Retrieve dolphin stats
  * Thread safe, blocking

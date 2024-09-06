@@ -1,27 +1,30 @@
 #pragma once
 
 typedef enum {
+    DesktopMainEventLock,
     DesktopMainEventOpenLockMenu,
     DesktopMainEventOpenArchive,
-    DesktopMainEventOpenFavoritePrimary,
-    DesktopMainEventOpenFavoriteSecondary,
-    DesktopMainEventOpenFavoriteTertiary,
+    DesktopMainEventOpenFavoriteLeftShort,
+    DesktopMainEventOpenFavoriteLeftLong,
+    DesktopMainEventOpenFavoriteRightShort,
+    DesktopMainEventOpenFavoriteRightLong,
     DesktopMainEventOpenMenu,
     DesktopMainEventOpenDebug,
-    DesktopMainEventOpenPassport,
     DesktopMainEventOpenPowerOff,
-    DesktopMainEventLock,
 
-    DesktopMainEventOpenGameMenu,
-    DesktopMainEventOpenTetris,
-    DesktopMainEventOpenArkanoid,
-    DesktopMainEventOpenDOOM,
-    DesktopMainEventOpenZombiez,
-    DesktopMainEventOpenHeap,
+    DesktopDummyEventOpenLeft,
+    DesktopDummyEventOpenDown,
+    DesktopDummyEventOpenOk,
+    DesktopDummyEventOpenUpLong,
+    DesktopDummyEventOpenDownLong,
+    DesktopDummyEventOpenLeftLong,
+    DesktopDummyEventOpenRightLong,
+    DesktopDummyEventOpenOkLong,
 
     DesktopLockedEventUnlocked,
     DesktopLockedEventUpdate,
     DesktopLockedEventShowPinInput,
+    DesktopLockedEventDoorsClosed,
 
     DesktopPinInputEventResetWrongPinLabel,
     DesktopPinInputEventUnlocked,
@@ -36,7 +39,6 @@ typedef enum {
     DesktopDebugEventExit,
 
     DesktopLockMenuEventLock,
-    DesktopLockMenuEventPinLock,
     DesktopLockMenuEventDummyModeOn,
     DesktopLockMenuEventDummyModeOff,
     DesktopLockMenuEventStealthModeOn,
@@ -49,8 +51,15 @@ typedef enum {
     DesktopSlideshowCompleted,
     DesktopSlideshowPoweroff,
 
+    DesktopHwMismatchExit,
+
+    DesktopEnclaveExit,
+
     // Global events
     DesktopGlobalBeforeAppStarted,
     DesktopGlobalAfterAppFinished,
     DesktopGlobalAutoLock,
+    DesktopGlobalApiUnlock,
+    DesktopGlobalSaveSettings,
+    DesktopGlobalReloadSettings,
 } DesktopEvent;

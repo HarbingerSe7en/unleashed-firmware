@@ -8,14 +8,13 @@
 
 #include "animation_manager.h"
 #include "animation_storage.h"
-#include "animation_storage_i.h"
 #include <assets_dolphin_internal.h>
 #include <assets_dolphin_blocking.h>
 
-#define ANIMATION_META_FILE "meta.txt"
-#define ANIMATION_DIR EXT_PATH("dolphin")
+#define ANIMATION_META_FILE     "meta.txt"
+#define ANIMATION_DIR           EXT_PATH("dolphin")
 #define ANIMATION_MANIFEST_FILE ANIMATION_DIR "/manifest.txt"
-#define TAG "AnimationStorage"
+#define TAG                     "AnimationStorage"
 
 static void animation_storage_free_bubbles(BubbleAnimation* animation);
 static void animation_storage_free_frames(BubbleAnimation* animation);
@@ -304,7 +303,7 @@ static bool animation_storage_load_frames(
         if(file_info.size > max_filesize) {
             FURI_LOG_E(
                 TAG,
-                "Filesize %lld, max: %d (width %d, height %d)",
+                "Filesize %llu, max: %zu (width %u, height %u)",
                 file_info.size,
                 max_filesize,
                 width,
@@ -329,7 +328,7 @@ static bool animation_storage_load_frames(
     if(!frames_ok) {
         FURI_LOG_E(
             TAG,
-            "Load \'%s\' failed, %dx%d, size: %lld",
+            "Load \'%s\' failed, %ux%u, size: %llu",
             furi_string_get_cstr(filename),
             width,
             height,

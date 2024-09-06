@@ -13,6 +13,7 @@ if you need your custom one, make sure it doesn't listed here
     300000000,
     302757000,
     303875000,
+    303900000,
     304250000,
     307000000,
     307500000,
@@ -38,6 +39,10 @@ if you need your custom one, make sure it doesn't listed here
     387000000,
     390000000,
     418000000,
+    430000000,
+    430500000,
+    431000000,
+    431500000,
     433075000, /* LPD433 first */
     433220000,
     433420000,

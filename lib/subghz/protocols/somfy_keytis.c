@@ -131,7 +131,7 @@ static bool
     instance->generic.serial = data & 0xFFFFFF;
 
     if(instance->generic.cnt < 0xFFFF) {
-        if((instance->generic.cnt + furi_hal_subghz_get_rolling_counter_mult()) >= 0xFFFF) {
+        if((instance->generic.cnt + furi_hal_subghz_get_rolling_counter_mult()) > 0xFFFF) {
             instance->generic.cnt = 0;
         } else {
             instance->generic.cnt += furi_hal_subghz_get_rolling_counter_mult();
@@ -200,7 +200,7 @@ bool subghz_protocol_somfy_keytis_create_data(
 
 /**
  * Generating an upload from data.
- * @param instance Pointer to a SubGhzProtocolEncoderKeeloq instance
+ * @param instance Pointer to a SubGhzProtocolEncoderSomfyKeytis instance
  * @return true On success
  */
 static bool subghz_protocol_encoder_somfy_keytis_get_upload(
@@ -208,10 +208,8 @@ static bool subghz_protocol_encoder_somfy_keytis_get_upload(
     uint8_t btn) {
     furi_assert(instance);
 
-    //gen new key
-    if(subghz_protocol_somfy_keytis_gen_data(instance, btn)) {
-        //ToDo if you need to add a callback to automatically update the data on the display
-    } else {
+    // Gen new key
+    if(!subghz_protocol_somfy_keytis_gen_data(instance, btn)) {
         return false;
     }
 

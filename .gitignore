@@ -12,6 +12,9 @@ compile_commands.json
 # JetBrains IDEs
 .idea/
 
+# Sublime Text
+.sublime-project.sublime-workspace
+
 # Python VirtEnvironments
 .env
 .venv
@@ -30,19 +33,9 @@ bindings/
 .mxproject
 Brewfile.lock.json
 
-# Visual Studio Code
-/.vscode/
-
 # Kate
 .kateproject
 .kateconfig
-
-# legendary cmake's
-build
-CMakeLists.txt
-
-# bundle output
-dist
 
 # kde
 .directory
@@ -50,8 +43,18 @@ null.d
 
 # SCons
 .sconsign.dblite
+
+
+# bundle output
+/dist
+/artifacts-default
+/artifacts-ofw-anims
+/artifacts-rgb-patch
+/artifacts-extra-apps
+/artifacts-clean
+
 # SCons build dir
-build/
+/build
 
 # Toolchain
 /toolchain
@@ -65,3 +68,5 @@ PVS-Studio.log
 *.PVS-Studio.*
 
 .gdbinit
+
+/fbt_options_local.py
